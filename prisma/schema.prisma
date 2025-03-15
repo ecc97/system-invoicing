@@ -15,23 +15,24 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(uuid())
-  name     String
-  email    String    @unique
-  password String
-  invoices Invoice[]
-  payments Payment[]
+  id            String   @id @default(uuid())
+  name          String?
+  email         String   @unique
+  password      String
+  emailVerified DateTime?
+  invoices      Invoice[]
 }
 
 model Invoice {
-  id        String        @id @default(uuid())
-  user      User          @relation(fields: [userId], references: [id])
-  userId    String
-  date      DateTime      @default(now())
-  status    String        @default("pending") // "pending" o "paid"
-  total     Float
-  items     InvoiceItem[]
-  payments  Payment[]
+  id       String        @id @default(uuid())
+  userId   String
+  user     User          @relation(fields: [userId], references: [id])
+  date     DateTime      @default(now())
+  status   String        @default("pending")
+  clientName   String?       
+  clientEmail  String?   
+  items    InvoiceItem[]
+  payments Payment[]
 }
 
 model InvoiceItem {
@@ -41,14 +42,11 @@ model InvoiceItem {
   description String
   rate        Float
   quantity    Int
-  amount      Float
 }
 
 model Payment {
   id        String   @id @default(uuid())
   invoice   Invoice  @relation(fields: [invoiceId], references: [id])
-  user      User @relation(fields: [userId], references: [id])
-  userId    String
   invoiceId String
   amount    Float
   date      DateTime @default(now())
