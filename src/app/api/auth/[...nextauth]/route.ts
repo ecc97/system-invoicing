@@ -28,7 +28,7 @@ interface CustomSession extends Session {
 
 const prisma = new PrismaClient();
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
