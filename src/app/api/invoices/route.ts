@@ -29,10 +29,17 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const skip = parseInt(searchParams.get("skip") || "0");
+    const take = parseInt(searchParams.get("take") || "5");
+
     const invoices = await prisma.invoice.findMany({
+      skip,
+      take,
       include: { user: true, items: true, payments: true },
+      orderBy: { date: 'desc' },
     })
     return NextResponse.json(invoices)
   } catch (error) {
