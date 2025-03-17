@@ -58,6 +58,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const invoiceId = (await params).id;
+    await prisma.invoiceItem.deleteMany({ where: { invoiceId } });
+    await prisma.payment.deleteMany({ where: { invoiceId } });
     const deletedInvoice = await prisma.invoice.delete({
       where: { id: invoiceId },
     });

@@ -3,6 +3,7 @@ import { fetchInvoices } from '@/app/services/actions';
 import { Invoice } from '@/types/IInvoices';
 import { useEffect, useState, useRef } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 interface InvoicesTemplateProps {
@@ -15,10 +16,12 @@ export default function InvoicesTemplate({ dataInvoices, take }: InvoicesTemplat
     const [hasMore, setHasMore] = useState(true);
     const [skip, setSkip] = useState(dataInvoices.length);
     const didLoad = useRef(false);
+    const { data: session } = useSession();
+    const userId = session?.user?.id;
 
 
     const loadMoreInvoices = async () => {
-        const newInvoices = await fetchInvoices(skip, take);
+        const newInvoices = await fetchInvoices(skip, take, userId);
         if (newInvoices.length < take) {
             setHasMore(false);
         }

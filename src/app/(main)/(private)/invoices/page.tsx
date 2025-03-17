@@ -1,7 +1,7 @@
 import { fetchInvoices } from "@/app/services/actions";
 import InvoicesTemplate from "@/components/ui/templates/InvoicesTemplate";
 
-type Params = Promise<{ take?: string; skip?: string }>;
+type Params = Promise<{ take?: string; skip?: string; }>;
 
 export default async function InvoicesPage({ searchParams }: { searchParams: Params }) {
   const take = (await searchParams).take ? Number((await searchParams).take) : 5;
