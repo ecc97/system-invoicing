@@ -26,3 +26,9 @@ export type Invoice = {
     items: InvoiceItem[];
     payments: Payment[];
 };
+
+export interface FormItemType {
+    description: string;
+    rate: string;
+    quantity: string;
+}
