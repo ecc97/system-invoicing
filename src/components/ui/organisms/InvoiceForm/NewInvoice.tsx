@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Input from '../../atoms/Input';
+import Button from '../../atoms/Button';
 import { FormItemType } from '@/types/IInvoices'
 
 export default function NewInvoice() {
@@ -65,7 +67,7 @@ export default function NewInvoice() {
         <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded">
             <div className="mb-4">
                 <label className="block">Nombre del Cliente</label>
-                <input
+                <Input
                     type="text"
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
@@ -74,7 +76,7 @@ export default function NewInvoice() {
             </div>
             <div className="mb-4">
                 <label className="block">Correo Electrónico del Cliente</label>
-                <input
+                <Input
                     type="email"
                     value={clientEmail}
                     onChange={(e) => setClientEmail(e.target.value)}
@@ -84,21 +86,21 @@ export default function NewInvoice() {
             {items.map((item, index) => (
                 <div key={index} className="mb-4">
                     <label className="block">Descripción</label>
-                    <input
+                    <Input
                         type="text"
                         value={item.description}
                         onChange={(e) => handleItemChange(index, "description", e.target.value)}
                         className="border p-2 w-full"
                     />
                     <label className="block">Precio Unitario</label>
-                    <input
+                    <Input
                         type="number"
                         value={item.rate}
                         onChange={(e) => handleItemChange(index, "rate", e.target.value)}
                         className="border p-2 w-full"
                     />
                     <label className="block">Cantidad</label>
-                    <input
+                    <Input
                         type="number"
                         value={item.quantity}
                         onChange={(e) => handleItemChange(index, "quantity", e.target.value)}
@@ -106,22 +108,22 @@ export default function NewInvoice() {
                     />
                 </div>
             ))}
-            <button
+            <Button
                 type="button"
                 onClick={addItem}
                 className="bg-green-500 text-white px-4 py-2 rounded mb-4"
             >
                 Agregar otro item
-            </button>
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+            </Button>
+            <Button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
                 Crear Factura
-            </button>
+            </Button>
             {items.length > 1 && (
-                <button
+                <Button
                     type="button"
                     onClick={() => removeItem(items.length - 1)}
                     className="bg-red-500 text-white px-4 py-2 rounded"
-                >Quitar</button>
+                >Quitar</Button>
             )}
         </form>
     )

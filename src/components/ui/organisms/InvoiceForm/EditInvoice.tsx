@@ -1,6 +1,9 @@
 "use client"
 import React, { useState } from 'react'
 import { Invoice, FormItemType } from '@/types/IInvoices';
+import Input from '../../atoms/Input';
+import Select from '../../atoms/Select';
+import Button from '../../atoms/Button';
 
 interface EditInvoiceProps {
     invoice: Invoice
@@ -78,7 +81,7 @@ export default function EditInvoice({invoice, onUpdateSuccess, onCancel, onError
         <div className="mt-4">
             <label className="block">
                 Nombre del Cliente:
-                <input
+                <Input
                     type="text"
                     name="clientName"
                     value={formData.clientName}
@@ -88,7 +91,7 @@ export default function EditInvoice({invoice, onUpdateSuccess, onCancel, onError
             </label>
             <label className="block mt-2">
                 Correo del Cliente:
-                <input
+                <Input
                     type="email"
                     name="clientEmail"
                     value={formData.clientEmail}
@@ -98,41 +101,42 @@ export default function EditInvoice({invoice, onUpdateSuccess, onCancel, onError
             </label>
             <label className="block mt-2">
                 Estado:
-                <select
+                <Select
                     name="status"
                     value={formData.status}
                     onChange={handleInputChange}
                     className="border p-1 w-full"
-                >
-                    <option value="pending" className='text-black'>Pending</option>
-                    <option value="paid" className='text-black'>Paid</option>
-                </select>
+                    options={[
+                        { value: 'pending', label: 'Pendiente' },
+                        { value: 'paid', label: 'Pagado' },
+                    ]}
+                 />
             </label>
             <h3 className="text-lg font-bold mt-4">Items</h3>
             <div className="flex flex-col gap-4">
                 {formData.items.map((item, index) => (
                     <div key={index} className="mb-4 flex flex-col gap-4 md:flex-row md:gap-2">
-                        <input type="text" value={item.description} onChange={(e) => handleItemChange(index, "description", e.target.value)} className="border p-1" />
-                        <input type="number" value={item.rate} onChange={(e) => handleItemChange(index, "rate", e.target.value)} className="border p-1" />
-                        <input type="number" value={item.quantity} onChange={(e) => handleItemChange(index, "quantity", e.target.value)} className="border p-1" />
-                        <button onClick={() => removeItem(index)} className="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
-                        <button onClick={addItem} className="bg-green-500 text-white px-4 py-2 rounded">Agregar Item</button>
+                        <Input type="text" value={item.description} onChange={(e) => handleItemChange(index, "description", e.target.value)} className="border p-1" />
+                        <Input type="number" value={item.rate} onChange={(e) => handleItemChange(index, "rate", e.target.value)} className="border p-1" />
+                        <Input type="number" value={item.quantity} onChange={(e) => handleItemChange(index, "quantity", e.target.value)} className="border p-1" />
+                        <Button onClick={() => removeItem(index)} className="bg-red-500 text-white px-4 py-2 rounded">Eliminar</Button>
+                        <Button onClick={addItem} className="bg-green-500 text-white px-4 py-2 rounded">Agregar Item</Button>
                     </div>
                 ))}
             </div>
             <div className="mt-4">
-                <button
+                <Button
                     onClick={handleUpdate}
                     className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
                 >
                     Guardar
-                </button>
-                <button
+                </Button>
+                <Button
                     onClick={onCancel}
                     className="bg-gray-500 text-white px-4 py-2 rounded"
                 >
                     Cancelar
-                </button>
+                </Button>
             </div>
         </div>
     )
