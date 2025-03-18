@@ -20,7 +20,7 @@ function Select(props: SelectProps) {
       name={name}
     >
       {options.map((option) => (
-        <option key={option.value} value={option.value}>
+        <option key={option.value} value={option.value} className='text-black'>
           {option.label}
         </option>
       ))}

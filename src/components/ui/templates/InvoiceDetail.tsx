@@ -31,7 +31,8 @@ export default function InvoiceDetail({ initialInvoice }: InvoiceDetailProps) {
                 throw new Error('Error deleting invoice');
             }
             router.push('/invoices');
-        } catch (err: any) {
+        } catch (error: unknown) {
+            const err = error as Error;
             setError(err.message || 'Error al eliminar la factura');
         }
     };

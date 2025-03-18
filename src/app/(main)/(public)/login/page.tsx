@@ -36,8 +36,7 @@ function LoginPage() {
         if (result?.error) {
             setError(result.error);
         } else {
-            // Redirige a la página protegida o dashboard
-            router.push("/dashboard");
+            router.push("/invoices");
         }
     };
 

@@ -46,7 +46,9 @@ export async function GET(request: Request) {
       orderBy: { date: 'desc' },
     })
     return NextResponse.json(invoices)
-  } catch (error) {
-    return NextResponse.json({ error: 'Error obteniendo facturas' }, { status: 500 })
+  } catch (error: unknown) {
+    const err = error as Error
+    const errorMessage = err.message || 'Error obteniendo facturas'
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }

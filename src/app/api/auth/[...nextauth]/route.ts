@@ -54,7 +54,7 @@ const authOptions: NextAuthOptions = {
             throw new Error("Contraseña incorrecta");
           }
 
-          // Retornamos el usuario sin la contraseña
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { password: _, ...userWithoutPassword } = user;
           return userWithoutPassword;
         } catch (error: unknown) {

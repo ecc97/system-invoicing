@@ -72,7 +72,8 @@ export default function EditInvoice({invoice, onUpdateSuccess, onCancel, onError
             }
             const updatedInvoice = await res.json();
             onUpdateSuccess(updatedInvoice);
-        } catch (err: any) {
+        } catch (error: unknown) {
+            const err = error as Error;
             onError(err.message || 'Error al actualizar la factura');
         }
     };

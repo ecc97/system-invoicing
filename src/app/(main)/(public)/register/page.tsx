@@ -41,10 +41,10 @@ export default function RegisterPage() {
                 setError(data.error || "Error en el registro");
             } else {
                 setSuccess("Usuario registrado correctamente");
-                // Redirigir al login después de un registro exitoso
                 router.push("/login");
             }
-        } catch (err: any) {
+        } catch (error: unknown) {
+            const err = error as Error;
             setError(err.message || "Error en el registro");
         }
     };
