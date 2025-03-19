@@ -7,6 +7,7 @@ interface InputProps {
     value: string | number;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
+    required?: boolean
   }
 
 function Input(props: InputProps) {
@@ -18,6 +19,8 @@ function Input(props: InputProps) {
       value={props.value}
       onChange={props.onChange}
       className={props.className}
+      required={props.required}
+      autoComplete="off"
     />
   )
 }

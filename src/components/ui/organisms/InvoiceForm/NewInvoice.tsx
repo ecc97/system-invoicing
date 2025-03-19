@@ -72,6 +72,7 @@ export default function NewInvoice() {
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     className="border p-2 w-full"
+                    required
                 />
             </div>
             <div className="mb-4">
@@ -91,6 +92,7 @@ export default function NewInvoice() {
                         value={item.description}
                         onChange={(e) => handleItemChange(index, "description", e.target.value)}
                         className="border p-2 w-full"
+                        required
                     />
                     <label className="block">Precio Unitario</label>
                     <Input
@@ -98,6 +100,7 @@ export default function NewInvoice() {
                         value={item.rate}
                         onChange={(e) => handleItemChange(index, "rate", e.target.value)}
                         className="border p-2 w-full"
+                        required
                     />
                     <label className="block">Cantidad</label>
                     <Input
@@ -105,26 +108,29 @@ export default function NewInvoice() {
                         value={item.quantity}
                         onChange={(e) => handleItemChange(index, "quantity", e.target.value)}
                         className="border p-2 w-full"
+                        required
                     />
                 </div>
             ))}
-            <Button
-                type="button"
-                onClick={addItem}
-                className="bg-green-500 text-white px-4 py-2 rounded mb-4"
-            >
-                Agregar otro item
-            </Button>
-            <Button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-                Crear Factura
-            </Button>
-            {items.length > 1 && (
+            <div className='flex flex-col lg:flex-row gap-1'>
                 <Button
                     type="button"
-                    onClick={() => removeItem(items.length - 1)}
-                    className="bg-red-500 text-white px-4 py-2 rounded"
-                >Quitar</Button>
-            )}
+                    onClick={addItem}
+                    className="bg-green-500 text-white px-4 py-2 rounded order-1 cursor-pointer"
+                >
+                    Agregar otro item
+                </Button>
+                <Button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded order-3 md:order-2 cursor-pointer">
+                    Crear Factura
+                </Button>
+                {items.length > 1 && (
+                    <Button
+                        type="button"
+                        onClick={() => removeItem(items.length - 1)}
+                        className="bg-red-500 text-white px-4 py-2 rounded order-2 md:order-3 cursor-pointer"
+                    >Quitar</Button>
+                )}
+            </div>
         </form>
     )
 }

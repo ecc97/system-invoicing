@@ -88,6 +88,7 @@ export default function EditInvoice({invoice, onUpdateSuccess, onCancel, onError
                     value={formData.clientName}
                     onChange={handleInputChange}
                     className="border p-1 w-full"
+                    required
                 />
             </label>
             <label className="block mt-2">
@@ -117,24 +118,33 @@ export default function EditInvoice({invoice, onUpdateSuccess, onCancel, onError
             <div className="flex flex-col gap-4">
                 {formData.items.map((item, index) => (
                     <div key={index} className="mb-4 flex flex-col gap-4 md:flex-row md:gap-2">
-                        <Input type="text" value={item.description} onChange={(e) => handleItemChange(index, "description", e.target.value)} className="border p-1" />
-                        <Input type="number" value={item.rate} onChange={(e) => handleItemChange(index, "rate", e.target.value)} className="border p-1" />
-                        <Input type="number" value={item.quantity} onChange={(e) => handleItemChange(index, "quantity", e.target.value)} className="border p-1" />
-                        <Button onClick={() => removeItem(index)} className="bg-red-500 text-white px-4 py-2 rounded">Eliminar</Button>
-                        <Button onClick={addItem} className="bg-green-500 text-white px-4 py-2 rounded">Agregar Item</Button>
+                        <div className='flex flex-col'>
+                            <label className="block">Descripción</label>
+                            <Input type="text" value={item.description} onChange={(e) => handleItemChange(index, "description", e.target.value)} className="border p-1" required />
+                        </div>
+                        <div className='flex flex-col'>
+                            <label className="block">Precio</label>
+                            <Input type="number" value={item.rate} onChange={(e) => handleItemChange(index, "rate", e.target.value)} className="border p-1" required />
+                        </div>
+                        <div className='flex flex-col'>    
+                            <label className="block">Cantidad</label>
+                            <Input type="number" value={item.quantity} onChange={(e) => handleItemChange(index, "quantity", e.target.value)} className="border p-1" required />
+                        </div>    
+                        <Button onClick={() => removeItem(index)} className="bg-red-500 text-white px-4 py-2 md:py-0 rounded">Eliminar</Button>
+                        <Button onClick={addItem} className="bg-green-500 text-white px-4 py-2 md:py-0 rounded">Agregar Item</Button>
                     </div>
                 ))}
             </div>
             <div className="mt-4">
                 <Button
                     onClick={handleUpdate}
-                    className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                    className="bg-blue-500 text-white w-full md:w-auto px-4 py-2 rounded mr-2 mb-2 md:mb-0 cursor-pointer"
                 >
                     Guardar
                 </Button>
                 <Button
                     onClick={onCancel}
-                    className="bg-gray-500 text-white px-4 py-2 rounded"
+                    className="bg-gray-500 text-white w-full md:w-auto px-4 py-2 rounded cursor-pointer"
                 >
                     Cancelar
                 </Button>

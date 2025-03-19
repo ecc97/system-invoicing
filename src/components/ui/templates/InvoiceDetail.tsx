@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import EditInvoice from '../organisms/InvoiceForm/EditInvoice';
 import { Invoice } from '@/types/IInvoices';
+import Button from '../atoms/Button';
 
 interface InvoiceDetailProps {
     initialInvoice: Invoice;
@@ -44,42 +45,58 @@ export default function InvoiceDetail({ initialInvoice }: InvoiceDetailProps) {
     };
 
     return (
-        <div className="p-4 border rounded">
-            <h2 className="text-xl font-bold mb-2">Factura: {invoice.id}</h2>
-            <p>Propiedad: {invoice.user?.name || invoice.user?.email}</p>
-            <p>Fecha: {new Date(invoice.date).toLocaleDateString()}</p>
-            <p>Total: {calculateTotal()}</p>
-            {error && <p className="text-red-500">{error}</p>}
-
-            {editing ? (                                                                                                                        
-                <EditInvoice
-                    invoice={invoice}                   
-                    onUpdateSuccess={handleUpdateSuccess}               
-                    onCancel={() => setEditing(false)}                                                                                                                                                                                                                               
-                    onError={setError}
-                />
-            ) : (
-                <div className="mt-4">
-                    <p>
-                        Cliente: {invoice.clientName} - {invoice.clientEmail}
-                    </p>
-                    <p>Estado: {invoice.status}</p>
-                    <div className="mt-4">
-                        <button
-                            onClick={() => setEditing(true)}
-                            className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-                        >
-                            Editar
-                        </button>
-                        <button
-                            onClick={handleDelete}
-                            className="bg-red-500 text-white px-4 py-2 rounded"
-                        >
-                            Eliminar
-                        </button>
+        <div className="container mx-auto p-4">
+            <div className="max-w-5xl mx-auto bg-sky-100 text-black p-8 rounded-3xl shadow-2xs">
+                <h2 className="text-xl font-bold mb-2">Factura: {invoice.id}</h2>
+                <div className="flex justify-between items-center">
+                    <div className="text-lg font-bold text-gray-800">
+                        {invoice.user?.name || invoice.user?.email}
                     </div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${invoice.status === 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                        {invoice.status.toUpperCase()}
+                    </span>
                 </div>
-            )}
+
+                <div className="mt-2">
+                    <p className="text-sm text-gray-600">
+                        <span className="font-medium">Fecha:</span> {new Date(invoice.date).toLocaleDateString()}
+                    </p>
+                </div>
+
+                <div className="pt-4">
+                    <p className="text-sm font-medium text-gray-700">Total: {calculateTotal()}</p>
+                </div>
+                {error && <p className="text-red-500">{error}</p>}
+
+                {editing ? (
+                    <EditInvoice
+                        invoice={invoice}
+                        onUpdateSuccess={handleUpdateSuccess}
+                        onCancel={() => setEditing(false)}
+                        onError={setError}
+                    />
+                ) : (
+                    <div className="mt-4">
+                        <p className="text-sm text-gray-600">
+                            <span className="font-medium">Cliente:</span> {invoice.clientName || 'N/A'} - {invoice.clientEmail || 'N/A'}
+                        </p>
+                        <div className="mt-4">
+                            <Button
+                                onClick={() => setEditing(true)}
+                                className="bg-green-500 text-white w-full md:w-auto px-4 py-2 rounded mr-2 mb-2 md:mb-0"
+                            >
+                                Editar
+                            </Button>
+                            <Button
+                                onClick={handleDelete}
+                                className="bg-red-500 text-white w-full md:w-auto px-4 py-2 rounded"
+                            >
+                                Eliminar
+                            </Button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

@@ -38,31 +38,33 @@ export default function InvoicesTemplate({ dataInvoices, take }: InvoicesTemplat
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Facturas</h1>
-            <InfiniteScroll
-                dataLength={invoices.length}
-                next={loadMoreInvoices}
-                hasMore={hasMore}
-                loader={<h4>Cargando...</h4>}
-                endMessage={
-                    <p className='text-center'>
-                        <b>No hay más facturas para cargar</b>
-                    </p>
-                }
-                className="overflow-y-auto"
-            >
-                {invoices.map((invoice) => {
-                    const total = invoice.items.reduce(
-                        (sum, item) => sum + item.rate * item.quantity,
-                        0
-                    );
-                    return (
-                        <Link key={invoice.id} href={`/invoices/detail/${invoice.id}`}>
-                            <InvoiceCard invoice={invoice} total={total} />
-                        </Link>
-                    );
-                })}
-            </InfiniteScroll>
+            <div className="max-w-5xl mx-auto bg-sky-100 text-black p-8 rounded-3xl shadow-2xs">
+                <h1 className="text-2xl font-bold mb-4">Facturas</h1>
+                <InfiniteScroll
+                    dataLength={invoices.length}
+                    next={loadMoreInvoices}
+                    hasMore={hasMore}
+                    loader={<h4>Cargando...</h4>}
+                    endMessage={
+                        <p className='text-center'>
+                            <b>No hay más facturas para cargar</b>
+                        </p>
+                    }
+                    className="overflow-y-auto"
+                >
+                    {invoices.map((invoice) => {
+                        const total = invoice.items.reduce(
+                            (sum, item) => sum + item.rate * item.quantity,
+                            0
+                        );
+                        return (
+                            <Link key={invoice.id} href={`/invoices/detail/${invoice.id}`}>
+                                <InvoiceCard invoice={invoice} total={total} />
+                            </Link>
+                        );
+                    })}
+                </InfiniteScroll>
+            </div>
         </div>
     );
 }

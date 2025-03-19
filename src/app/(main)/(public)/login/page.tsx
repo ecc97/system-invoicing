@@ -79,7 +79,7 @@ function LoginPage() {
                         </Link>
                     </p>
                     <p className="mt-1 text-center">
-                        <Link href="/forgot-password" className="text-blue-500 hover:underline">
+                        <Link href="/" className="text-blue-500 hover:underline">
                             Volver a la página principal
                         </Link>
                     </p>
