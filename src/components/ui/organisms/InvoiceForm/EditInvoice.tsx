@@ -55,6 +55,23 @@ export default function EditInvoice({invoice, onUpdateSuccess, onCancel, onError
     };
 
     const handleUpdate = async () => {
+        if (!formData.clientName) {
+            onError('El nombre del cliente es obligatorio');
+            return;
+        }
+        if (formData.items.some(item => !item.description || !item.rate || !item.quantity)) {
+            onError('Todos los campos de los items son obligatorios');
+            return;
+        }
+        if (formData.items.some(item => item.quantity <= '0')) {
+            onError('La cantidad de cada item debe ser mayor a 0');
+            return;
+        }
+        if (formData.items.some(item => item.rate <= '0')) {
+            onError('El precio de cada item debe ser mayor a 0');
+            return;
+        }
+
         const formattedItems = formData.items.map((item: { description: string; rate: string | number; quantity: string | number; }) => ({
             description: item.description,
             rate: parseFloat(item.rate.toString()) || 0,

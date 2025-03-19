@@ -34,7 +34,14 @@ export default function InvoicesTemplate({ dataInvoices, take }: InvoicesTemplat
         if (!didLoad.current) {
             didLoad.current = true;
         }
-    }, []);
+        setInvoices(dataInvoices);
+    }, [dataInvoices]);
+
+    // useEffect(() => {
+    //     setInvoices(dataInvoices);
+    //     setHasMore(true);
+    //     setSkip(dataInvoices.length);
+    // }, [dataInvoices]);
 
     return (
         <div className="container mx-auto p-4">
@@ -59,7 +66,9 @@ export default function InvoicesTemplate({ dataInvoices, take }: InvoicesTemplat
                         );
                         return (
                             <Link key={invoice.id} href={`/invoices/detail/${invoice.id}`}>
-                                <InvoiceCard invoice={invoice} total={total} />
+                                {invoice.user.id === session?.user.id && (
+                                    <InvoiceCard invoice={invoice} total={total} />
+                                )}
                             </Link>
                         );
                     })}
